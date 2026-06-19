@@ -1,6 +1,51 @@
-# Agent Memory: v1 → v2 Evolution Overview
+# Agent Memory — A Reader's Guide & v1→v2 Map
 
-A cross-generation map of the 18 papers in this collection. **v1** = foundational era (2023–2025); **v2** = the 2026 frontier (plus a few late-2025 papers that already point at it). The dividing survey, *Memory in the Age of AI Agents* (Dec 2025), sits on the boundary and predicts most of what v2 delivers.
+> **What is "agent memory"?** It's the machinery that lets an LLM agent remember across turns, sessions, and tasks — storing what it learns, retrieving it when relevant, and updating or forgetting it over time. It's distinct from a bigger context window (that's just more RAM), from RAG (static external knowledge), and from raw fine-tuning. This folder collects **37 key papers** spanning the field's foundational era through the 2026 frontier, each with a hand-written `_notes.md` summary.
+
+This README is the map. **v1** = foundational era (2023–2025); **v2** = the 2026 frontier (plus a few late-2025 papers that already point at it). The dividing survey, *Memory in the Age of AI Agents* (Dec 2025), sits on the boundary and predicts most of what v2 delivers.
+
+## How this folder is organized
+
+- Every paper is a **pair**: `<name>.pdf` (the paper) + `<name>_notes.md` (a detailed study summary with real numbers, architecture, ablations, and a "Where it sits (v1/v2)" note). Read the notes first; open the PDF when you want the details.
+- This `README.md` is the navigation layer: the learning path (below), the v1→v2 analysis (§1–4), the full catalog (§5), and a "what to read for what" index (§6).
+- Diagrams render on GitHub (Mermaid). If you're reading in a plain editor, they appear as code blocks.
+
+---
+
+## 🧭 Start here — the totem pole (a learning path)
+
+New to agent memory? Climb the pole from the bottom up. Each tier builds on the one below; you can stop at any tier and already have a coherent picture. Pick one or two papers per tier (the **bold** ones are the recommended entry point for that tier).
+
+```mermaid
+flowchart TB
+    T9["▲ TIER 8 · Trust & safety<br/>RTBF/WikiMem · LTM-Security survey · SSGM"]
+    T8["TIER 7 · Measure it<br/>LongMemEval · MemBench · MemoryAgentBench"]
+    T7["TIER 6 · Frontier: learned & latent memory<br/>Titans · Memory-R1 · Mem-α · AgeMem · AtomMem · MemCoE · LatentMem"]
+    T6["TIER 5 · Frontier: structure, experience, multimodal<br/>MAGMA · HippoRAG 1/2 · ReasoningBank · Nemori · EverMemOS · MIRIX · GAM · LightMem · RF-Mem · MemGAS"]
+    T5["TIER 4 · Production systems you can use today<br/>Mem0 · MemOS · Zep · Cognee"]
+    T4["TIER 3 · Get the big picture<br/>Survey (Dec'25) · Survey (Mar'26)"]
+    T3["TIER 2 · Foundational systems (v1)<br/>MemGPT · MemoryBank · ReadAgent · A-Mem · MemoryOS"]
+    T2["TIER 1 · Why memory is hard<br/>LOCOMO · LLMs Get Lost"]
+    T1["TIER 0 · Mental model<br/>memory ≠ context window ≠ RAG ≠ fine-tuning"]
+    T1 --> T2 --> T3 --> T4 --> T5 --> T6 --> T7 --> T8 --> T9
+```
+
+| Tier | Goal | Read | Why |
+|---|---|---|---|
+| **0** | Frame the problem | (this README's intro) | Know what memory *is* and isn't before reading systems |
+| **1** | Feel the pain | **LOCOMO**, LLMs Get Lost | Two diagnostics showing agents forget across long conversations / multi-turn tasks |
+| **2** | Foundational moves | **MemGPT** (OS metaphor), MemoryBank (forgetting curve), ReadAgent (gist+lookup), **A-Mem** (self-organizing notes), MemoryOS (3-tier) | The core ideas every later system remixes |
+| **3** | The big picture | **Survey: *Memory in the Age of AI Agents*** (Forms/Functions/Dynamics), then *Memory for Autonomous LLM Agents* (control-policy view) | Two complementary taxonomies; read after you've seen a few systems so the categories mean something |
+| **4** | Build something | **Mem0**, MemOS, Zep, Cognee | Open-source production memory you can `pip install`; Mem0 is the field's standard baseline |
+| **5** | Frontier — structure & experience | **MAGMA** (multi-graph), HippoRAG 1/2 (KG+PageRank), **ReasoningBank** (learn from success+failure), Nemori, EverMemOS, MIRIX (multimodal), GAM (just-in-time), LightMem (efficiency), RF-Mem, MemGAS | How 2026 systems organize, generate, and route memory |
+| **6** | Frontier — learned & latent | **Titans** (test-time neural memory), Memory-R1 / Mem-α / **AgeMem** / AtomMem (RL memory ops), MemCoE, LatentMem | The biggest shift: memory policies *learned by RL* instead of hand-written |
+| **7** | Evaluate | **LongMemEval**, MemBench, MemoryAgentBench | How the field measures progress; pick your benchmark before claiming a win |
+| **8** | Trust & safety | **LTM-Security survey**, SSGM, RTBF/WikiMem | Persistent memory is an attack surface and a privacy/compliance liability |
+
+**Three fast on-ramps depending on who you are:**
+- *Engineer who wants to ship:* Tier 1 → Tier 4 (Mem0/Zep) → pick a benchmark in Tier 7.
+- *Researcher:* Tier 2 → Tier 3 surveys → Tier 5–6 frontier → Tier 8.
+- *Just curious:* read MemGPT's notes, then this README's §2 comparison table.
 
 ---
 
@@ -147,13 +192,13 @@ The Dec-2025 survey listed eight frontiers. v2 populates them:
 | Retrieval → **Generation** | GAM (JIT runtime context), LatentMem (generated latent memory) |
 | **Automated** memory management | MemCoE, LatentMem (learned write/select policies) |
 | **RL** meets memory | MemCoE (GRPO), LatentMem (LMPO) |
-| Multimodal memory | *(still open — none here fully address it)* |
-| **Shared** memory in multi-agent systems | LatentMem (role-aware) |
-| Memory for world models | *(open)* |
-| **Trustworthy** memory (privacy/forgetting) | RTBF audit / WikiMem |
-| Human-cognitive connections (offline consolidation) | LightMem (sleep-time), MAGMA (CLS dual-stream), RF-Mem (dual-process) |
+| Multimodal memory | **MIRIX** (screenshots / visual input) |
+| **Shared** memory in multi-agent systems | LatentMem (role-aware), MIRIX (multi-agent managers) |
+| Memory for world models | *(still open)* |
+| **Trustworthy** memory (privacy/forgetting) | RTBF audit / WikiMem, **LTM Security survey**, **SSGM** governance |
+| Human-cognitive connections (offline consolidation) | LightMem (sleep-time), MAGMA (CLS dual-stream), RF-Mem (dual-process), Nemori (predictive coding), EverMemOS (engram) |
 
-So v2 is essentially the survey's roadmap being executed — with **multimodal** and **world-model** memory still wide open.
+After the 2nd batch, the only frontier still wide open is **world-model memory**. Multimodal (MIRIX), trustworthy/security (LTM-Security survey, SSGM, RTBF), RL-driven (Memory-R1, Mem-α, AgeMem, AtomMem, MemCoE, LatentMem), experiential (ReasoningBank), and parametric/test-time (Titans, MemOS) are now all represented.
 
 ---
 
@@ -186,13 +231,119 @@ flowchart LR
 
 ---
 
-## 5. Quick "what to read for what"
+## 5. Expanded collection — 2nd batch (37 papers total)
 
+A second sweep added 19 papers that fill the gaps the original 18 left open. Grouped by the axis they cover:
+
+| Axis | Papers added | What gap it closed |
+|---|---|---|
+| **Production frameworks / baselines** | **Mem0** (LOCOMO 10-way baseline), **MemOS** (MemCube: parametric+activation+plaintext) | the de-facto systems every v2 paper benchmarks against |
+| **Parametric / test-time learned memory** | **Titans** (neural memory module, learn-to-memorize at test time) | the latent/parametric Form the collection lacked |
+| **Neurobiological KG-memory lineage** | **HippoRAG** (PPR over KG), **HippoRAG 2** ("from RAG to memory") | the *source* of MemGAS's PPR & MAGMA/Zep graph routing |
+| **RL-driven memory** | **Memory-R1** (manage: ADD/UPDATE/DELETE/NOOP), **Mem-α** (construct/write), **AgeMem** (ops-as-tools + GRPO, unified LTM/STM), **AtomMem** (atomic CRUD as POMDP) | the "RL meets memory" frontier (was only MemCoE/LatentMem) |
+| **Experiential / self-evolving memory** | **ReasoningBank** (reasoning strategies from success+failure, MaTTS) | the survey's Experiential Function — was nearly empty |
+| **Self-organizing memory** | **Nemori** (predictive-coding distillation; a MAGMA baseline), **EverMemOS** (engram lifecycle: MemCells→MemScenes) | self-organizing structure beyond A-Mem |
+| **Multimodal + multi-agent** | **MIRIX** (6 memory types, 8 agents, screenshot input) | the multimodal frontier |
+| **Benchmarks** | **LongMemEval** (ICLR'25, ~115k-token), **MemBench** (factual+reflective), **MemoryAgentBench** (ICLR'26, incremental multi-turn, 4 competencies) | evaluation was only LOCOMO |
+| **Security / governance / safety** | **LTM-Security survey** (lifecycle attacks/defenses), **SSGM** (stability & safety governed memory) | a whole axis the collection had zero coverage of |
+| **Newer survey** | **Memory for Autonomous LLM Agents** (Mar'26; scope/substrate/control-policy taxonomy) | a 2nd, control-policy-centric survey vs the Dec'25 one |
+
+### The RL-driven memory subfield (now the densest v2 cluster)
+
+```mermaid
+flowchart TB
+    subgraph WHAT["WHAT to write"]
+        MA[Mem-α · construct via RL]
+    end
+    subgraph HOW["HOW to manage"]
+        MR[Memory-R1 · ADD/UPDATE/DELETE/NOOP]
+        AT[AtomMem · atomic CRUD as POMDP]
+    end
+    subgraph BOTH["WHAT + HOW, unified"]
+        AG[AgeMem · 5 ops as tools + step-GRPO]
+        MC[MemCoE · guideline + GRPO policy]
+    end
+    subgraph LATENT["beyond text"]
+        LM[LatentMem · latent memory + LMPO]
+    end
+    WHAT --> BOTH
+    HOW --> BOTH
+    BOTH --> LATENT
+```
+
+All six share one move: replace a hand-written write/manage rule with a **learned policy trained by RL (mostly GRPO)**, rewarded by downstream task success. This is the clearest single signature of v2.
+
+### Expanded landscape (37 papers)
+
+```mermaid
+flowchart TB
+    subgraph BENCH["Benchmarks / diagnostics"]
+        B1[LOCOMO]
+        B2[LongMemEval]
+        B3[MemBench]
+        B4[MemoryAgentBench]
+        B5[LLMs Get Lost]
+    end
+    subgraph GRAPH["Structured / graph / KG memory"]
+        G1[A-Mem]
+        G2[Zep]
+        G3[Cognee]
+        G4[MAGMA]
+        G5[MemGAS]
+        G6[HippoRAG 1/2]
+    end
+    subgraph RL["RL / learned / latent memory"]
+        R1[Memory-R1]
+        R2[Mem-α]
+        R3[AgeMem]
+        R4[AtomMem]
+        R5[MemCoE]
+        R6[LatentMem]
+        R7[Titans · test-time]
+    end
+    subgraph OS["Memory OS / self-organizing"]
+        O1[MemGPT]
+        O2[MemoryOS]
+        O3[MemOS]
+        O4[EverMemOS]
+        O5[Nemori]
+    end
+    subgraph RUNTIME["Runtime / efficiency / experiential"]
+        U1[ReadAgent]
+        U2[GAM · JIT]
+        U3[LightMem · sleep]
+        U4[RF-Mem]
+        U5[ReasoningBank · experiential]
+    end
+    subgraph PERS["Personalization & multimodal"]
+        P1[MemoryBank]
+        P2[MIRIX · multimodal]
+    end
+    subgraph SAFE["Trust / security / governance"]
+        S1[RTBF · WikiMem]
+        S2[LTM-Security survey]
+        S3[SSGM]
+    end
+    BENCH -.measures.-> GRAPH
+    BENCH -.measures.-> RL
+    BENCH -.measures.-> OS
+```
+
+---
+
+## 6. Quick "what to read for what"
+
+- **Production baselines (start here):** **Mem0**, **MemOS**, Zep, Cognee
 - **Best single architectural idea:** MAGMA (disentangled multi-graph + intent routing)
-- **Best efficiency play:** LightMem (sleep-time consolidation, huge token/call savings)
-- **Best "memory as learned policy":** MemCoE (RL) and LatentMem (latent + RL)
-- **Best "build memory at query time":** GAM (JIT deep research)
-- **Production frameworks:** Zep/Graphiti, Cognee
+- **KG-memory foundations:** **HippoRAG / HippoRAG 2** (the PPR-over-KG ancestor)
+- **Parametric / test-time memory:** **Titans** (learn to memorize at test time)
+- **RL-driven memory:** Memory-R1 (manage), Mem-α (write), **AgeMem** (unified, ops-as-tools), AtomMem (atomic), MemCoE, LatentMem
+- **Experiential / self-evolving:** **ReasoningBank** (success + failure → strategies)
+- **Self-organizing OS:** EverMemOS (engram), Nemori (predictive coding)
+- **Efficiency play:** LightMem (sleep-time consolidation)
+- **Build memory at query time:** GAM (JIT deep research)
+- **Multimodal + multi-agent:** **MIRIX**
+- **Benchmarks:** LOCOMO, **LongMemEval**, MemBench, **MemoryAgentBench**; diagnostics: LLMs Get Lost
+- **Security / safety / governance:** **LTM-Security survey**, **SSGM**, RTBF/WikiMem
+- **Surveys:** *Memory in the Age of AI Agents* (Dec'25, Forms/Functions/Dynamics) + *Memory for Autonomous LLM Agents* (Mar'26, scope/substrate/control-policy)
 - **The same-author throughline:** MemGAS → RF-Mem → MemCoE
-- **Diagnostics / motivation:** LOCOMO (v1), LLMs Get Lost (v2)
-- **Trust / privacy axis:** RTBF audit / WikiMem
