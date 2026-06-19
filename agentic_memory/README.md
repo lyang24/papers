@@ -51,33 +51,80 @@ flowchart TB
 
 ## 1. The roster
 
-### v1 — foundational (2023–2025)
+All 37 papers below. **v1** = foundational era (2023–early 2025); **v2** = the 2025 H2–2026 frontier. A handful of 2024/early-2025 architectures (HippoRAG, Titans, LongMemEval) are foundational *lineages* that v2 builds on directly, so they sit in v1 even though they're cited everywhere in v2.
+
+### v1 — foundational (2023 – early 2025)
 | Paper | Year | One-line |
 |---|---|---|
-| MemGPT | 2023.10 | OS virtual-memory metaphor; LLM self-pages context ↔ external DB |
 | MemoryBank | 2023.05 | Ebbinghaus forgetting curve + user portraits; plug-and-play |
-| ReadAgent | 2024 ICML | Fuzzy-trace gist memory; LLM-as-retriever beats embedding RAG |
+| MemGPT | 2023.10 | OS virtual-memory metaphor; LLM self-pages context ↔ external DB |
 | LOCOMO | 2024.02 | Benchmark; "observations > raw dialog > summaries" for retrieval |
+| ReadAgent | 2024 ICML | Fuzzy-trace gist memory; LLM-as-retriever beats embedding RAG |
+| HippoRAG | 2024.05 | Neurobiological KG + Personalized PageRank; **ancestor of v2 graph memory** |
+| LongMemEval | 2024.10 | Benchmark; ~115k-token histories; 5 core memory abilities |
+| Titans | 2025.01 | Neural memory module that **learns to memorize at test time** (MAC/MAG/MAL); parametric lineage |
 | A-Mem | 2025.02 | Zettelkasten atomic notes; link generation + memory **evolution** |
 | MemoryOS | 2025.05 | 3-tier STM/MTM/LPM; segment-page; heat-based eviction; 90-dim persona |
-| *Survey* | 2025.12 | Forms / Functions / Dynamics taxonomy; boundary document |
+| *Survey* (Age of AI Agents) | 2025.12 | Forms / Functions / Dynamics taxonomy; **boundary document** that predicts v2 |
 
-### v2 — frontier (2025–2026)
-| Paper | Method | Year | One-line |
-|---|---|---|---|
-| MAGMA | MAGMA | 2026.01 | Disentangled multi-graph (temporal/causal/semantic/entity) + intent-routed retrieval + dual-stream write |
-| LatentMem | LatentMem | 2026.03 | Learnable **latent** memory (not text), role-aware, RL-trained composer (LMPO), multi-agent |
-| Zep | Zep/Graphiti | 2025.01 | Bi-temporal knowledge graph; production framework |
-| Multi-Granularity | **MemGAS** | 2025.05 | 4-level granularity + GMM association + entropy granularity router + PPR (training-free) |
-| Cognee | Cognee | 2025.05 | Modular ECL (Extract-Cognify-Load) KG framework; TPE hyperparameter optimization |
-| LightMem | LightMem | 2026 ICLR | Atkinson-Shiffrin 3-stage; sleep-time offline consolidation; extreme efficiency |
-| GAM | GAM | 2025.11 | Just-in-Time compilation; dual-agent Memorizer + Researcher; runtime deep research |
-| Evoking User Memory | **RF-Mem** | 2026.03 | Cognitive dual-process retrieval (fast Familiarity / slow Recollection); personalization |
-| Learning How/What | **MemCoE** | 2026.05 | Cognition-inspired 2-stage: learn guideline + RL memory policy (multi-turn GRPO) |
-| RTBF audit | WikiMem | 2025.07 | GDPR right-to-be-forgotten; quantify parametric memorization before unlearning |
-| LLMs Get Lost | — | 2025.05 | **Diagnostic** (not a system): multi-turn drop ~39%; motivates memory/context mgmt |
+### v2 — frontier (2025 H2 – 2026), grouped by axis
 
-> Two papers are not memory *systems*: **LLMs Get Lost** (diagnostic, like LOCOMO) and **RTBF audit** (privacy/forgetting of parametric memory). They are kept here for the broader picture but flagged as off-axis.
+**Production frameworks / baselines**
+| Paper | Year | One-line |
+|---|---|---|
+| Zep / Graphiti | 2025.01 | Bi-temporal knowledge graph; production framework |
+| Mem0 | 2025.04 | The de-facto baseline; LOCOMO 10-way comparison; extract→update pipeline (+ graph variant) |
+| Cognee | 2025.05 | Modular ECL (Extract-Cognify-Load) KG framework; TPE hyperparameter optimization |
+| MemOS | 2025.07 | MemCube unifying **parametric + activation + plaintext** memory (≠ MemoryOS) |
+
+**Structured / graph / KG memory**
+| Paper | Year | One-line |
+|---|---|---|
+| HippoRAG 2 | 2025.02 | "From RAG to memory"; dense-sparse + recognition memory over the PPR graph |
+| MemGAS | 2025.05 | 4-level granularity + GMM association + entropy granularity router + PPR (training-free) |
+| MAGMA | 2026.01 | Disentangled multi-graph (temporal/causal/semantic/entity) + intent-routed retrieval + dual-stream write |
+
+**RL / learned / latent memory**
+| Paper | Year | One-line |
+|---|---|---|
+| Memory-R1 | 2025.08 | RL-trained Memory Manager (ADD/UPDATE/DELETE/NOOP) + Answer Agent |
+| Mem-α | 2025.09 | RL learns the memory **construction/write** policy; generalizes to >400k tokens |
+| AgeMem | 2026.01 | 5 memory ops as tools + step-level GRPO; unified LTM/STM |
+| AtomMem | 2026.01 | Atomic CRUD memory ops as a POMDP, learned with GRPO |
+| LatentMem | 2026.03 | Learnable **latent** memory (not text), role-aware, RL composer (LMPO), multi-agent |
+| MemCoE | 2026.05 | Cognition-inspired 2-stage: learn guideline + RL memory policy (multi-turn GRPO) |
+
+**Self-organizing / memory OS**
+| Paper | Year | One-line |
+|---|---|---|
+| Nemori | 2025.08 | Predictive-coding distillation ("what deserves memory"); a MAGMA baseline |
+| EverMemOS | 2026.01 | Engram lifecycle: MemCells → MemScenes → reconstructive recollection |
+
+**Runtime / efficiency / experiential / personalized**
+| Paper | Year | One-line |
+|---|---|---|
+| MIRIX | 2025.07 | 6 memory types, 8 agents, **multimodal** (screenshot) input |
+| ReasoningBank | 2025.09 | **Experiential**: reasoning strategies from success+failure; MaTTS test-time scaling |
+| GAM | 2025.11 | Just-in-Time compilation; dual-agent Memorizer + Researcher; runtime deep research |
+| LightMem | 2026 ICLR | Atkinson-Shiffrin 3-stage; sleep-time offline consolidation; extreme efficiency |
+| RF-Mem | 2026.03 | Dual-process retrieval (fast Familiarity / slow Recollection); personalization |
+
+**Benchmarks & diagnostics**
+| Paper | Year | One-line |
+|---|---|---|
+| LLMs Get Lost | 2025.05 | **Diagnostic** (not a system): multi-turn drop ~39%; motivates memory/context mgmt |
+| MemBench | 2025.06 | Benchmark adding **reflective/experiential** memory + efficiency metrics |
+| MemoryAgentBench | 2026 ICLR | Benchmark; **incremental multi-turn**; 4 competencies (retrieve / learn / understand / forget) |
+
+**Trust / security / governance & newer survey**
+| Paper | Year | One-line |
+|---|---|---|
+| RTBF audit / WikiMem | 2025.07 | GDPR right-to-be-forgotten; quantify parametric memorization before unlearning |
+| SSGM | 2026.03 | Stability & Safety Governed Memory; governs self-evolving memory against drift/poisoning |
+| *Survey* (Autonomous Agents) | 2026.03 | 2nd survey; scope / substrate / **control-policy** taxonomy |
+| LTM-Security survey | 2026.04 | Lifecycle attack/defense/governance taxonomy for long-term memory |
+
+> Not memory *systems* (kept for the broader picture): **LLMs Get Lost** & the three **benchmarks** (diagnostics/evaluation), the two **surveys** (maps), and the **security** papers (RTBF / SSGM / LTM-Security, which treat memory as an attack surface).
 
 ### Timeline (renders on GitHub)
 
@@ -85,51 +132,73 @@ flowchart TB
 timeline
     title Agent Memory — v1 (foundational) to v2 (frontier)
     section v1 · foundational
-        2023 : MemoryBank (forgetting curve) : MemGPT (OS metaphor)
-        2024 : LOCOMO (benchmark) : ReadAgent (gist memory)
-        2025 H1 : A-Mem (Zettelkasten) : MemoryOS (3-tier)
-    section v1 to v2 boundary
-        2025 H2 : Survey — Forms/Functions/Dynamics
+        2023 : MemoryBank : MemGPT
+        2024 : LOCOMO : ReadAgent : HippoRAG : LongMemEval
+        2025 H1 : Titans : Zep : A-Mem : Mem0 : HippoRAG2 : MemoryOS : MemGAS : Cognee : LLMs Get Lost : MemBench
+    section boundary
+        2025 H2 : MemOS : MIRIX : RTBF/WikiMem : Nemori : Memory-R1 : ReasoningBank : Mem-alpha : GAM : Survey (Age of AI Agents)
     section v2 · frontier
-        2025 (early/late) : Zep (temporal KG) : MemGAS (multi-granularity) : Cognee (ECL) : LLMs Get Lost (diagnostic) : RTBF audit
-        2026 : MAGMA (multi-graph) : LatentMem (latent+RL) : LightMem (sleep-time) : GAM (JIT) : RF-Mem (dual-process) : MemCoE (learned policy)
+        2026 : MAGMA : AgeMem : AtomMem : EverMemOS : MemoryAgentBench : LightMem : LatentMem : RF-Mem : SSGM : Survey (Autonomous) : LTM-Security : MemCoE
 ```
 
-### Landscape map — how the papers cluster
+### Landscape map — all 37 papers, clustered by axis
 
 ```mermaid
 flowchart TB
-    subgraph DIAG["Diagnostics / benchmarks"]
-        L1[LOCOMO v1]
-        L2[LLMs Get Lost v2]
+    subgraph BENCH["Benchmarks / diagnostics"]
+        B1[LOCOMO]
+        B2[LongMemEval]
+        B3[MemBench]
+        B4[MemoryAgentBench]
+        B5[LLMs Get Lost]
     end
-    subgraph STRUCT["Structured / graph memory"]
-        S1[A-Mem · notes]
-        S2[Zep · temporal KG]
-        S3[Cognee · ECL KG]
-        S4[MAGMA · multi-graph]
-        S5[MemGAS · multi-granularity]
+    subgraph FOUND["Foundational systems v1"]
+        F1[MemGPT]
+        F2[MemoryBank]
+        F3[ReadAgent]
+        F4[A-Mem]
+        F5[MemoryOS]
     end
-    subgraph LEARN["Learned / RL / latent memory"]
-        D1[LatentMem · latent+LMPO]
-        D2[MemCoE · 2-stage GRPO]
+    subgraph GRAPH["Structured / graph / KG memory"]
+        G1[HippoRAG 1/2]
+        G2[Zep]
+        G3[Cognee]
+        G4[MemGAS]
+        G5[MAGMA]
     end
-    subgraph RUNTIME["Runtime / efficiency / retrieval"]
-        R1[ReadAgent · gist+lookup]
-        R2[GAM · JIT deep research]
-        R3[LightMem · sleep-time]
-        R4[RF-Mem · dual-process]
+    subgraph RL["RL / learned / latent / parametric"]
+        R1[Titans · test-time]
+        R2[Memory-R1]
+        R3[Mem-alpha]
+        R4[AgeMem]
+        R5[AtomMem]
+        R6[MemCoE]
+        R7[LatentMem]
     end
-    subgraph PERSONA["Personalization & persona"]
-        P1[MemoryBank · portraits]
-        P2[MemoryOS · 90-dim persona]
-        P3[RF-Mem]
+    subgraph OS["Memory OS / self-organizing"]
+        O1[MemOS]
+        O2[EverMemOS]
+        O3[Nemori]
     end
-    subgraph TRUST["Trust / privacy / forgetting"]
-        T1[RTBF · WikiMem]
+    subgraph RUNTIME["Runtime / efficiency / experiential / personal"]
+        U1[GAM · JIT]
+        U2[LightMem · sleep]
+        U3[RF-Mem]
+        U4[ReasoningBank · experiential]
+        U5[MIRIX · multimodal]
+        U6[Mem0 · production]
     end
-    DIAG -.motivates.-> STRUCT
-    DIAG -.motivates.-> RUNTIME
+    subgraph SAFE["Trust / security / governance"]
+        S1[RTBF · WikiMem]
+        S2[LTM-Security survey]
+        S3[SSGM]
+    end
+    BENCH -.measures.-> FOUND
+    BENCH -.measures.-> GRAPH
+    BENCH -.measures.-> RL
+    BENCH -.measures.-> OS
+    FOUND ==>|v1 to v2| GRAPH
+    FOUND ==>|v1 to v2| RL
 ```
 
 ---
@@ -173,12 +242,12 @@ flowchart LR
         B5[Multi-agent role-aware]
         B6[Self-evolving / generated]
     end
-    A1 ==>|MemCoE, LatentMem| B1
-    A2 ==>|MAGMA, Zep, LatentMem| B2
-    A3 ==>|RF-Mem, MAGMA, GAM| B3
-    A4 ==>|GAM| B4
-    A5 ==>|LatentMem| B5
-    A6 ==>|GAM, MemCoE| B6
+    A1 ==>|"Memory-R1, Mem-α, AgeMem, AtomMem, MemCoE, LatentMem"| B1
+    A2 ==>|"MAGMA, Zep, HippoRAG, Titans, LatentMem"| B2
+    A3 ==>|"RF-Mem, MAGMA, HippoRAG, GAM"| B3
+    A4 ==>|"GAM, ReasoningBank"| B4
+    A5 ==>|"LatentMem, MIRIX"| B5
+    A6 ==>|"GAM, MemCoE, ReasoningBank"| B6
 ```
 
 ---
@@ -273,61 +342,7 @@ flowchart TB
 
 All six share one move: replace a hand-written write/manage rule with a **learned policy trained by RL (mostly GRPO)**, rewarded by downstream task success. This is the clearest single signature of v2.
 
-### Expanded landscape (37 papers)
-
-```mermaid
-flowchart TB
-    subgraph BENCH["Benchmarks / diagnostics"]
-        B1[LOCOMO]
-        B2[LongMemEval]
-        B3[MemBench]
-        B4[MemoryAgentBench]
-        B5[LLMs Get Lost]
-    end
-    subgraph GRAPH["Structured / graph / KG memory"]
-        G1[A-Mem]
-        G2[Zep]
-        G3[Cognee]
-        G4[MAGMA]
-        G5[MemGAS]
-        G6[HippoRAG 1/2]
-    end
-    subgraph RL["RL / learned / latent memory"]
-        R1[Memory-R1]
-        R2[Mem-α]
-        R3[AgeMem]
-        R4[AtomMem]
-        R5[MemCoE]
-        R6[LatentMem]
-        R7[Titans · test-time]
-    end
-    subgraph OS["Memory OS / self-organizing"]
-        O1[MemGPT]
-        O2[MemoryOS]
-        O3[MemOS]
-        O4[EverMemOS]
-        O5[Nemori]
-    end
-    subgraph RUNTIME["Runtime / efficiency / experiential"]
-        U1[ReadAgent]
-        U2[GAM · JIT]
-        U3[LightMem · sleep]
-        U4[RF-Mem]
-        U5[ReasoningBank · experiential]
-    end
-    subgraph PERS["Personalization & multimodal"]
-        P1[MemoryBank]
-        P2[MIRIX · multimodal]
-    end
-    subgraph SAFE["Trust / security / governance"]
-        S1[RTBF · WikiMem]
-        S2[LTM-Security survey]
-        S3[SSGM]
-    end
-    BENCH -.measures.-> GRAPH
-    BENCH -.measures.-> RL
-    BENCH -.measures.-> OS
-```
+*(For the full 37-paper landscape clustered by axis, see the **Landscape map** diagram in §1.)*
 
 ---
 
