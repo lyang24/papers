@@ -34,6 +34,59 @@ A cross-generation map of the 18 papers in this collection. **v1** = foundationa
 
 > Two papers are not memory *systems*: **LLMs Get Lost** (diagnostic, like LOCOMO) and **RTBF audit** (privacy/forgetting of parametric memory). They are kept here for the broader picture but flagged as off-axis.
 
+### Timeline (renders on GitHub)
+
+```mermaid
+timeline
+    title Agent Memory — v1 (foundational) to v2 (frontier)
+    section v1 · foundational
+        2023 : MemoryBank (forgetting curve) : MemGPT (OS metaphor)
+        2024 : LOCOMO (benchmark) : ReadAgent (gist memory)
+        2025 H1 : A-Mem (Zettelkasten) : MemoryOS (3-tier)
+    section v1 to v2 boundary
+        2025 H2 : Survey — Forms/Functions/Dynamics
+    section v2 · frontier
+        2025 (early/late) : Zep (temporal KG) : MemGAS (multi-granularity) : Cognee (ECL) : LLMs Get Lost (diagnostic) : RTBF audit
+        2026 : MAGMA (multi-graph) : LatentMem (latent+RL) : LightMem (sleep-time) : GAM (JIT) : RF-Mem (dual-process) : MemCoE (learned policy)
+```
+
+### Landscape map — how the papers cluster
+
+```mermaid
+flowchart TB
+    subgraph DIAG["Diagnostics / benchmarks"]
+        L1[LOCOMO v1]
+        L2[LLMs Get Lost v2]
+    end
+    subgraph STRUCT["Structured / graph memory"]
+        S1[A-Mem · notes]
+        S2[Zep · temporal KG]
+        S3[Cognee · ECL KG]
+        S4[MAGMA · multi-graph]
+        S5[MemGAS · multi-granularity]
+    end
+    subgraph LEARN["Learned / RL / latent memory"]
+        D1[LatentMem · latent+LMPO]
+        D2[MemCoE · 2-stage GRPO]
+    end
+    subgraph RUNTIME["Runtime / efficiency / retrieval"]
+        R1[ReadAgent · gist+lookup]
+        R2[GAM · JIT deep research]
+        R3[LightMem · sleep-time]
+        R4[RF-Mem · dual-process]
+    end
+    subgraph PERSONA["Personalization & persona"]
+        P1[MemoryBank · portraits]
+        P2[MemoryOS · 90-dim persona]
+        P3[RF-Mem]
+    end
+    subgraph TRUST["Trust / privacy / forgetting"]
+        T1[RTBF · WikiMem]
+    end
+    DIAG -.motivates.-> STRUCT
+    DIAG -.motivates.-> RUNTIME
+```
+
 ---
 
 ## 2. Cross-generation comparison by dimension
@@ -54,6 +107,34 @@ A cross-generation map of the 18 papers in this collection. **v1** = foundationa
 | **Memory paradigm** | Static repository to be **queried** | Self-evolving / **generated** memory that co-adapts | "store then retrieve" → "construct/learn memory" (GAM, LatentMem, MemCoE) |
 
 **The one-sentence story:** v1 *stores text and queries it with similarity, using rules a human wrote*; v2 *structures, learns, or generates memory — and decides what/how/when to remember with policies the system learns or routes by intent.*
+
+### The paradigm shift, visualized
+
+```mermaid
+flowchart LR
+    subgraph V1["v1 · foundational"]
+        A1[Hand-crafted rules]
+        A2[Token-level text]
+        A3[Cosine similarity]
+        A4[Build upfront]
+        A5[Single agent]
+        A6[Static repository]
+    end
+    subgraph V2["v2 · frontier"]
+        B1[Learned / RL policies]
+        B2[Graphs or latent vectors]
+        B3[Intent-routed / generated]
+        B4[Just-in-time at query]
+        B5[Multi-agent role-aware]
+        B6[Self-evolving / generated]
+    end
+    A1 ==>|MemCoE, LatentMem| B1
+    A2 ==>|MAGMA, Zep, LatentMem| B2
+    A3 ==>|RF-Mem, MAGMA, GAM| B3
+    A4 ==>|GAM| B4
+    A5 ==>|LatentMem| B5
+    A6 ==>|GAM, MemCoE| B6
+```
 
 ---
 
@@ -85,6 +166,19 @@ Three of the v2 papers are one continuous program of work from the same core aut
 | **1. Structure** | **MemGAS** (multi-granularity) | 2025.05 | *How to organize & select* memory across granularities: 4-level units, GMM association, entropy-based granularity routing, Personalized PageRank — **training-free** | Selection is heuristic/entropy-based; retrieval still one-shot. → make retrieval cognitively adaptive |
 | **2. Retrieve** | **RF-Mem** (recollection-familiarity) | 2026.03 | *How to retrieve* adaptively: a dual-process controller routes each query between fast **Familiarity** (one-shot) and slow **Recollection** (iterative cluster-and-mix), gated by a familiarity-uncertainty signal | Still retrieving from a fixed/hand-built store; write policy not learned. → learn what & how to write |
 | **3. Learn to write** | **MemCoE** (two-stage optimization) | 2026.05 | *What & how to memorize*, **learned**: Stage 1 induces an organization guideline via textual gradients (prefrontal analogy); Stage 2 trains the memory-evolution policy with multi-turn **GRPO** (hippocampus analogy) | Text memory only; single-agent. → latent / multi-agent (cf. LatentMem) |
+
+### The arc, visualized
+
+```mermaid
+flowchart LR
+    MG["<b>MemGAS</b> · 2025.05<br/>ORGANIZE<br/>4-granularity + GMM + entropy router + PPR<br/><i>training-free</i>"]
+    RF["<b>RF-Mem</b> · 2026.03<br/>RETRIEVE<br/>dual-process: fast Familiarity / slow Recollection<br/><i>cognitive routing</i>"]
+    MC["<b>MemCoE</b> · 2026.05<br/>LEARN TO WRITE<br/>guideline via textual gradients + RL policy GRPO<br/><i>what & how to memorize</i>"]
+    NEXT["next: latent / multi-agent<br/>(cf. LatentMem)"]
+    MG -->|"retrieval still one-shot"| RF
+    RF -->|"store still hand-built"| MC
+    MC -.->|"text-only, single-agent"| NEXT
+```
 
 **The arc:** the group moved from *organizing* memory (MemGAS, training-free) → *retrieving* it adaptively (RF-Mem, cognitive routing) → *learning* what and how to write it (MemCoE, RL). It mirrors the whole-field v1→v2 shift in miniature — heuristic structure giving way to learned, cognition-grounded policies — and each paper is built on benchmarks the prior one used (LOCOMO, LongMemEval, PersonaMem, PersonaBench, PrefEval). A natural next move for this line would be **latent or multi-agent** memory, which is exactly where LatentMem (a different group) already points.
 
