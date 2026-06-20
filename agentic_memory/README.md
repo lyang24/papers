@@ -358,6 +358,7 @@ All six share one move: replace a hand-written write/manage rule with a **learne
 - **Efficiency play:** LightMem (sleep-time consolidation)
 - **Build memory at query time:** GAM (JIT deep research)
 - **Multimodal + multi-agent:** **MIRIX**
+- **Personalization lineage:** **MemoryBank** (user portraits) → **MemoryOS** (90-dim persona + user KB) → **RF-Mem** (recollection/familiarity retrieval); see also Mem0 / MemGAS for per-user stores
 - **Benchmarks:** LOCOMO, **LongMemEval**, MemBench, **MemoryAgentBench**; diagnostics: LLMs Get Lost
 - **Security / safety / governance:** **LTM-Security survey**, **SSGM**, RTBF/WikiMem
 - **Surveys:** *Memory in the Age of AI Agents* (Dec'25, Forms/Functions/Dynamics) + *Memory for Autonomous LLM Agents* (Mar'26, scope/substrate/control-policy)
